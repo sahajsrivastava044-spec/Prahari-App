@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express=require('express');
 const userRoutes = require('./routes/authRoutes');
+const incidentRoutes = require('./routes/incidentRoutes');
+const alertRoutes=require('./routes/alertRoutes');
 const connectDB = require('./config/db');
 const app=express();
 
@@ -15,6 +17,10 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/api/user/',userRoutes);
+
+app.use('/api/incidents',incidentRoutes);
+
+app.use('/api/alerts',alertRoutes);
 
 app.listen(PORT,()=>{
     console.log(`The server is running on port ${PORT}`);

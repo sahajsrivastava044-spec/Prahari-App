@@ -51,9 +51,10 @@ const incidentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    reporter:{
-       type:mongoose.Schema.Types.ObjectId,
-       ref:"User"  
+    reporter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
     },
     riskScore: {
       type: Number,
@@ -64,7 +65,7 @@ const incidentSchema = new mongoose.Schema(
     riskLevel: {
       type: String,
       required: true,
-      enum: ['low', 'medium', 'high', 'critical'],
+      enum: ['LOW','HIGH','MEDIUM'],
     },
     status: {
       type: String,
