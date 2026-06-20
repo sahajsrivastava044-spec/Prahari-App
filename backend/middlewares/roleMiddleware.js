@@ -7,3 +7,5 @@ function roleAccess(...allowedRoles){
         }
     }
 }
+
+module.exports=roleAccess
