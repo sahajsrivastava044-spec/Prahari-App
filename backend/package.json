@@ -20,7 +20,8 @@
     "geolib": "^3.3.14",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.1",
-    "multer": "^2.2.0"
+    "multer": "^2.2.0",
+    "openai": "^6.44.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

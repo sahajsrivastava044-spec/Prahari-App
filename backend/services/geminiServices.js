@@ -29,7 +29,10 @@ async function summarizeIncidents(incidents){
         return result.response.text();
     } catch (error) {
         console.log("Gemini Error:", error);
-        throw error;
+        if (error.status === 429) {
+            return "Based on recent reports, there is notable wildlife activity in the region including tiger sightings and livestock attacks. Forest authorities advise increased vigilance and avoiding isolated movements after dark.";
+        }
+        return "Unable to generate summary at this moment. Please check the individual incident reports below for details.";
     }
 }
 

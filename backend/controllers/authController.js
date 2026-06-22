@@ -10,7 +10,19 @@ signup = async (req, res) => {
 
     if (!name || !phone || !village || !password) {
       return res.status(400).json({
-        message: "Please provide all required fields",
+          message: "All fields are required"
+      });
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      return res.status(400).json({
+          message: "Invalid phone number"
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+          message: "Password must be at least 6 characters"
       });
     }
 

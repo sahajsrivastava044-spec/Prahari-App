@@ -4,7 +4,7 @@ const Alert = require("../models/Alert.model");
 
 const getAlerts = async (req, res) => {
   try {
-    const alerts = await AlertModel.find()
+    const alerts = await Alert.find()
       .sort({ createdAt: -1 });
 
     res.status(200).json({

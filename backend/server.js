@@ -4,9 +4,12 @@ const userRoutes = require('./routes/authRoutes');
 const incidentRoutes = require('./routes/incidentRoutes');
 const alertRoutes=require('./routes/alertRoutes');
 const connectDB = require('./config/db');
+const cors = require('cors');
 const app=express();
 
 const PORT=process.env.PORT || 5000;
+
+app.use(cors());
 
 connectDB();
 
