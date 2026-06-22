@@ -1,7 +1,7 @@
 const Incident = require("../models/Incident.model");
 const generateAlert = require("../services/alertService");
 const { calculateRisk } = require("../services/riskEngine");
-const { summarizeIncidents } = require("../services/geminiServices");
+const { summarizeIncidents } = require("../services/openaiServices");
 
 const report = async (req, res) => {
     try {
@@ -13,17 +13,14 @@ const report = async (req, res) => {
             });
         }
 
+        const riskData = await calculateRisk(req.body);
+
         const incident = await Incident.create({
             ...req.body,
-            reporter:req.user.id
-
+            reporter: req.user.id,
+            riskScore: riskData.score,
+            riskLevel: riskData.level
         });
-
-        const riskData = await calculateRisk(incident);
-
-        incident.riskScore = riskData.score;
-
-        incident.riskLevel = riskData.level;
 
         await incident.save();
 
@@ -43,7 +40,7 @@ const report = async (req, res) => {
 
 
 const getIncidents = async (req,res)=>{
-    const incidents = await Incident.find().populate('reporter', 'name phone village');
+    const incidents = await Incident.find().sort({ createdAt: -1 }).populate('reporter', 'name phone village');
     res.status(200).json({
         incidents
     });

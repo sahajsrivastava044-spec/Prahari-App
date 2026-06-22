@@ -12,10 +12,11 @@ const weights = {
 async function calculateRisk(newIncident) {
   try {
     const sevenDaysAgo=new Date();
-    sevenDaysAgo.seetDate(sevenDaysAgo.getDate()-7);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate()-7);
 
     const recentIncidents=await Incident.find({
         createdAt:{$gte:sevenDaysAgo},
+        status: { $ne: 'resolved' }
     });
 
     let totalScore=0;
@@ -38,12 +39,9 @@ async function calculateRisk(newIncident) {
             totalScore += weights[incident.incidentType] || 0;
         }
     }
-
-    if (!nearbyIncidents.includes(newIncidents._id)){
-        nearbyIncidents.push(newIncident._id);
-        totalScore+=weights[newIncident.incidentType] || 0; 
-    }
-
+        
+    totalScore+=weights[newIncident.incidentType] || 0; 
+    
     let level = "LOW";
 
     if (totalScore >= 20) {
